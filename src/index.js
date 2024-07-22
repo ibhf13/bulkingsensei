@@ -4,6 +4,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import App from './App'
+import Login from 'Pages/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -20,10 +21,10 @@ const router = createBrowserRouter([
   //   path: '/signup',
   //   element: <Signup />,
   // },
-  // {
-  //   path: '/login',
-  //   element: <Login />,
-  // },
+ {
+ path: '/login',
+ element: <Login />,
+ },
 ])
 
 root.render(
