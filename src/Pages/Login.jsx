@@ -346,7 +346,7 @@ const Login = memo(() => {
             <RightBoxText>
               Want to keep track of your gains?
               <br /><Link
-                  href="#"
+                  href=""
                   style={{color: "#94C1C6", textDecoration: "none" }}
                 >
                  Sign up 
