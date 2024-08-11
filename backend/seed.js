@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const Exercise = require("./models/Exercise");
-require("dotenv").config();
-const connectDB = require("./config/db");
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import Exercise from "./models/Exercise.js";
+import connectDB from "./config/db.js";
 
 const seedExercises = async () => {
   await connectDB();

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const RoutineSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -13,4 +13,4 @@ const RoutineSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("Routine", RoutineSchema);
+export default mongoose.model("Routine", RoutineSchema);

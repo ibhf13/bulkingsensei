@@ -1,11 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
   getAllExercises,
   getExerciseById,
-} = require("../controllers/exerciseController");
+} from "../controllers/exerciseController.js";
 
-router.get("/", getAllExercises);
-router.get("/:id", getExerciseById);
+const exerciseRouter = express.Router();
 
-module.exports = router;
+exerciseRouter.get("/", getAllExercises);
+exerciseRouter.get("/:id", getExerciseById);
+
+export default exerciseRouter;

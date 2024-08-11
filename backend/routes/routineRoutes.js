@@ -1,16 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
   createRoutine,
   getAllRoutines,
   updateRoutine,
   deleteRoutine,
-} = require("../controllers/routineController");
-const auth = require("../middleware/auth");
+} from "../controllers/routineController.js";
+import auth from "../middleware/auth.js";
 
-router.post("/", auth, createRoutine);
-router.get("/", auth, getAllRoutines);
-router.put("/:id", auth, updateRoutine);
-router.delete("/:id", auth, deleteRoutine);
+const routineRouter = express.Router();
+routineRouter.post("/", auth, createRoutine);
+routineRouter.get("/", auth, getAllRoutines);
+routineRouter.put("/:id", auth, updateRoutine);
+routineRouter.delete("/:id", auth, deleteRoutine);
 
-module.exports = router;
+export default routineRouter;

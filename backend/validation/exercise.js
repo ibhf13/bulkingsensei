@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from "joi";
 
 const exerciseSchema = Joi.object({
   name: Joi.string().required(),
@@ -8,6 +8,4 @@ const exerciseSchema = Joi.object({
   defaultReps: Joi.number().integer().min(1).allow(null),
 });
 
-module.exports = {
-  exerciseSchema,
-};
+export default exerciseSchema;

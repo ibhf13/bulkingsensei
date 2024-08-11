@@ -1,9 +1,9 @@
-const { registerUserSchema, loginUserSchema } = require("../validation/user");
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+import { registerUserSchema, loginUserSchema } from "../validation/user.js";
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
-exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   const { error } = registerUserSchema.validate(req.body);
   if (error) return res.status(400).json({ msg: error.details[0].message });
 
@@ -28,7 +28,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { error } = loginUserSchema.validate(req.body);
   if (error) return res.status(400).json({ msg: error.details[0].message });
 

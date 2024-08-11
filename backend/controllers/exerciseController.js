@@ -1,6 +1,6 @@
-const Exercise = require("../models/Exercise");
+import Exercise from "../models/Exercise.js";
 
-exports.getAllExercises = async (req, res) => {
+export const getAllExercises = async (req, res) => {
   try {
     const exercises = await Exercise.find();
     res.json(exercises);
@@ -10,7 +10,7 @@ exports.getAllExercises = async (req, res) => {
   }
 };
 
-exports.getExerciseById = async (req, res) => {
+export const getExerciseById = async (req, res) => {
   try {
     const exercise = await Exercise.findById(req.params.id);
     if (!exercise) return res.status(404).json({ msg: "Exercise not found" });

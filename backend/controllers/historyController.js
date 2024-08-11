@@ -1,7 +1,6 @@
-const { trainingHistorySchema } = require("../validation/trainingHistory");
-const TrainingHistory = require("../models/TrainingHistory");
+import TrainingHistory from "../models/TrainingHistory.js";
 
-exports.recordSession = async (req, res) => {
+export const recordSession = async (req, res) => {
   const { error } = trainingHistorySchema.validate(req.body);
   if (error) return res.status(400).json({ msg: error.details[0].message });
 
@@ -21,7 +20,7 @@ exports.recordSession = async (req, res) => {
   }
 };
 
-exports.getAllSessions = async (req, res) => {
+export const getAllSessions = async (req, res) => {
   try {
     const sessions = await TrainingHistory.find({ userId: req.user.userId });
     res.json(sessions);
@@ -31,7 +30,7 @@ exports.getAllSessions = async (req, res) => {
   }
 };
 
-exports.getSessionById = async (req, res) => {
+export const getSessionById = async (req, res) => {
   try {
     const session = await TrainingHistory.findById(req.params.id);
     if (!session) return res.status(404).json({ msg: "Session not found" });

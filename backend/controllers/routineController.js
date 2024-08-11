@@ -1,7 +1,7 @@
-const { routineSchema } = require("../validation/routine");
-const Routine = require("../models/Routine");
+import Routine from "../models/Routine.js";
+import { routineSchema } from "../validation/routine.js";
 
-exports.createRoutine = async (req, res) => {
+export const createRoutine = async (req, res) => {
   const { error } = routineSchema.validate(req.body);
   if (error) return res.status(400).json({ msg: error.details[0].message });
 
@@ -22,7 +22,7 @@ exports.createRoutine = async (req, res) => {
   }
 };
 
-exports.updateRoutine = async (req, res) => {
+export const updateRoutine = async (req, res) => {
   const { error } = routineSchema.validate(req.body);
   if (error) return res.status(400).json({ msg: error.details[0].message });
 
@@ -47,7 +47,7 @@ exports.updateRoutine = async (req, res) => {
   }
 };
 
-exports.getAllRoutines = async (req, res) => {
+export const getAllRoutines = async (req, res) => {
   try {
     const routines = await Routine.find({ userId: req.user.userId });
     res.json(routines);
@@ -57,7 +57,7 @@ exports.getAllRoutines = async (req, res) => {
   }
 };
 
-exports.deleteRoutine = async (req, res) => {
+export const deleteRoutine = async (req, res) => {
   try {
     let routine = await Routine.findById(req.params.id);
     if (!routine) return res.status(404).json({ msg: "Routine not found" });

@@ -1,14 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
   recordSession,
   getAllSessions,
   getSessionById,
-} = require("../controllers/historyController");
-const auth = require("../middleware/auth");
+} from "../controllers/historyController.js";
+import auth from "../middleware/auth.js";
 
-router.post("/", auth, recordSession);
-router.get("/", auth, getAllSessions);
-router.get("/:id", auth, getSessionById);
+const historyRouter = express.Router();
+historyRouter.post("/", auth, recordSession);
+historyRouter.get("/", auth, getAllSessions);
+historyRouter.get("/:id", auth, getSessionById);
 
-module.exports = router;
+export default historyRouter;
