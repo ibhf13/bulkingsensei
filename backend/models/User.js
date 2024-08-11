@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import e from "express";
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  age: { type: Number, required: true },
+  weight: { type: Number, required: true },
+  height: { type: Number, required: true },
+  bmi: { type: Number, required: true },
+  address: { type: String, required: true },
   routines: [{ type: mongoose.Schema.Types.ObjectId, ref: "Routine" }],
 });
 

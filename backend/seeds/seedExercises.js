@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import Exercise from "./models/Exercise.js";
-import connectDB from "./config/db.js";
+import Exercise from "../models/Exercise.js";
+import connectDB from "../config/db.js";
 
-const seedExercises = async () => {
+export const seedExercises = async () => {
   await connectDB();
 
   const exercises = [
@@ -278,5 +278,3 @@ const seedExercises = async () => {
     mongoose.connection.close();
   }
 };
-
-seedExercises();
