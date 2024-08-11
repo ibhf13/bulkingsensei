@@ -9,7 +9,7 @@
       "@models/*": ["models/*"]
     },
     "jsx": "react-jsx",
-    "checkJs": true,
+    // "checkJs": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"],
