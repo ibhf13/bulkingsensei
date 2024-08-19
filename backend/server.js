@@ -1,5 +1,5 @@
 import express from "express";
-import connectDB from "./config/db.js";
+import connectMongoDB from "./config/mongoDB.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import userRouter from "./routes/userRoutes.js";
@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 
 // Connect Database
-connectDB();
+connectMongoDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
