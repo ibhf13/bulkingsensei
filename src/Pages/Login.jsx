@@ -17,10 +17,8 @@ import {
 import { styled } from "@mui/system";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 
-// Importing Poppins and Roboto fonts
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/600.css"; // Poppins SemiBold
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -127,7 +125,7 @@ const LoginButton = styled(BaseButton)({
 const SocialLoginButton = styled(BaseButton)({
   backgroundColor: theme.palette.common.white,
   color: theme.palette.common.black,
-  fontFamily: "Poppins, Arial, sans-serif",
+  fontFamily: "Roboto, Arial, sans-serif",
   fontSize: "12px",
   fontWeight: theme.typography.fontWeightBold,
   border: `1px solid ${theme.palette.grey[400]}`,
@@ -173,7 +171,7 @@ const LoginWithOthers = styled(Typography)({
 const RegisterText = styled(Typography)({
   marginTop: theme.spacing(5),
   paddingBottom: "81px",
-  fontFamily: "Poppins, Arial, sans-serif",
+  fontFamily: "Roboto, Arial, sans-serif",
   fontSize: "14px",
   fontWeight: 600,
   display: "flex",
@@ -189,6 +187,12 @@ const Divider = styled(Box)({
 });
 
 const Login = memo(() => {
+  const navigate = useNavigate();  // Initialize useNavigate
+
+  const handleNavigateToHomePage = () => {
+    navigate('/home');  // Navigate to the HomePage route
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -206,7 +210,7 @@ const Login = memo(() => {
               component="h1"
               sx={{
                 mt: 2,
-                fontFamily: "Poppins, Arial, sans-serif",
+                fontFamily: "Roboto, Arial, sans-serif",
                 fontSize: "17px",
                 fontWeight: 400,
                 pb: 1,
@@ -275,7 +279,7 @@ const Login = memo(() => {
                 sx={{
                   alignSelf: "flex-start",
                   mb: 2,
-                  fontFamily: "Poppins, Arial, sans-serif",
+                  fontFamily: "Roboto, Arial, sans-serif",
                   fontSize: "12px",
                   fontWeight: "bold",
                   pl: "150px",
@@ -288,12 +292,12 @@ const Login = memo(() => {
               >
                 Forgot your password?
               </Link>
-              <LoginButton type="submit" variant="contained" >
+              <LoginButton type="button" variant="contained" onClick={handleNavigateToHomePage}>
                 Login
               </LoginButton>
 
-               {/* Divider Line */}
-               <Divider />
+              {/* Divider Line */}
+              <Divider />
 
               <LoginWithOthers align="center">
                 <strong>Login&nbsp;</strong> with Others
@@ -302,8 +306,8 @@ const Login = memo(() => {
                 <Grid item>
                   <SocialLoginButton
                     variant="contained"
-                    startIcon={<GoogleIcon sx={{scale: "125%", marginRight: "4px"}} />}
-                    sx={{ marginBottom: "10px"}} // Ensure proper spacing
+                    startIcon={<GoogleIcon sx={{ scale: "125%", marginRight: "4px" }} />}
+                    sx={{ marginBottom: "10px" }} // Ensure proper spacing
                   >
                     Login with <strong>&nbsp;Google</strong>
                   </SocialLoginButton>
@@ -311,7 +315,7 @@ const Login = memo(() => {
                 <Grid item>
                   <SocialLoginButton
                     variant="contained"
-                    startIcon={<FacebookIcon sx={{scale: "150%", marginRight: "5px"}}/>}
+                    startIcon={<FacebookIcon sx={{ scale: "150%", marginRight: "5px" }} />}
                     sx={{ marginTop: "-10px" }} // Ensure proper spacing
                   >
                     Login with <strong>&nbsp;Facebook</strong>
@@ -346,12 +350,12 @@ const Login = memo(() => {
             <RightBoxText>
               Want to keep track of your gains?
               <br /><Link
-                  href=""
-                  style={{color: "#94C1C6", textDecoration: "none" }}
-                >
-                 Sign up 
-                </Link>
-                &nbsp;now!
+                href=""
+                style={{ color: "#94C1C6", textDecoration: "none" }}
+              >
+                Sign up 
+              </Link>
+              &nbsp;now!
             </RightBoxText>
             <img
               src={bulkyManImage}

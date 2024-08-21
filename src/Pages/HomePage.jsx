@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import { useNavigate } from 'react-router-dom';
 import theme from "../styles/theme";
 import barbellIcon from "../Images/Login/23603572.png";
 import ProgressBar from "../components/ProgressBar";
@@ -47,6 +48,27 @@ const SetGoalsButton = styled(ButtonBase)({
   '&:hover': {
     backgroundColor: '#82A9B3',
     boxShadow: theme.shadows[6],
+  },
+});
+
+const MyPlanButton = styled(ButtonBase)({
+  width: '200px',
+  height: '200px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: theme.shape.borderRadius,
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  fontWeight: 'bold',
+  boxShadow: theme.shadows[3],
+  '&:hover': {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[6],
+  },
+  '&:hover $icon': {
+    color: theme.palette.primary.main,
   },
 });
 
@@ -85,6 +107,7 @@ const LargeRectanglePaper = styled(Paper)({
 });
 
 const HomePage = ({ user }) => {
+  const navigate = useNavigate();
   const monthlyProgress = 80;
   const stepsProgress = 50;
 
@@ -104,6 +127,10 @@ const HomePage = ({ user }) => {
     setGoals([...goals, { title: newGoal, progress: 0 }]);
     setNewGoal("");
     setGoalDialogOpen(false);
+  };
+
+  const handleNavigateToMyPlan = () => {
+    navigate('/myplan');
   };
 
   return (
@@ -143,11 +170,11 @@ const HomePage = ({ user }) => {
               </Grid>
 
               <Grid item>
-                <SquarePaperButton elevation={3}>
+                <MyPlanButton elevation={3} onClick={handleNavigateToMyPlan}>
                   <Typography variant="h6" align="center" color="textSecondary">
-                    Future Feature
+                    My Plan
                   </Typography>
-                </SquarePaperButton>
+                </MyPlanButton>
               </Grid>
 
               <Grid item>
