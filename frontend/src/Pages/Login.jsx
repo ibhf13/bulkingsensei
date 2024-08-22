@@ -15,11 +15,10 @@ import {
   Lock as LockIcon,
 } from "@mui/icons-material";
 import { styled } from "@mui/system";
-import { createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 
-// Importing Poppins and Roboto fonts
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/600.css"; // Poppins SemiBold
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -126,7 +125,7 @@ const LoginButton = styled(BaseButton)({
 const SocialLoginButton = styled(BaseButton)({
   backgroundColor: theme.palette.common.white,
   color: theme.palette.common.black,
-  fontFamily: "Poppins, Arial, sans-serif",
+  fontFamily: "Roboto, Arial, sans-serif",
   fontSize: "12px",
   fontWeight: theme.typography.fontWeightBold,
   border: `1px solid ${theme.palette.grey[400]}`,
@@ -172,7 +171,7 @@ const LoginWithOthers = styled(Typography)({
 const RegisterText = styled(Typography)({
   marginTop: theme.spacing(5),
   paddingBottom: "81px",
-  fontFamily: "Poppins, Arial, sans-serif",
+  fontFamily: "Roboto, Arial, sans-serif",
   fontSize: "14px",
   fontWeight: 600,
   display: "flex",
@@ -188,182 +187,191 @@ const Divider = styled(Box)({
 });
 
 const Login = memo(() => {
+  const navigate = useNavigate();  // Initialize useNavigate
+
+  const handleNavigateToHomePage = () => {
+    navigate('/home');  // Navigate to the HomePage route
+  };
+
   return (
-    <BackgroundBox>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <FormBox>
-          <Typography
-            component="h1"
-            sx={{
-              mt: 2,
-              fontFamily: "Poppins, Arial, sans-serif",
-              fontSize: "17px",
-              fontWeight: 400,
-              pb: 1,
-            }}
-          >
-            Login and start bulking right now!
-          </Typography>
-          <img
-            src={barbellIcon}
-            alt="Barbell Icon"
-            width="320"
-            height="112"
-          />
-          <Box
-            component="form"
-            noValidate
-            sx={{
-              mt: 2,
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <InputBox>
-              <IconWrapper>
-                <PersonIcon />
-              </IconWrapper>
-              <StyledTextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username" // Ensure label is clear and accessible
-                name="username"
-                autoComplete="username"
-                autoFocus
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </InputBox>
-            <InputBox>
-              <IconWrapper>
-                <LockIcon />
-              </IconWrapper>
-              <StyledTextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password" // Ensure label is clear and accessible
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </InputBox>
-            <Link
-              href="#"
-              variant="body2"
-              sx={{
-                alignSelf: "flex-start",
-                mb: 2,
-                fontFamily: "Poppins, Arial, sans-serif",
-                fontSize: "12px",
-                fontWeight: "bold",
-                pl: "150px",
-                textDecoration: "none",
-                color: "inherit",
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              Forgot your password?
-            </Link>
-            <LoginButton type="submit" variant="contained" >
-              Login
-            </LoginButton>
-
-            {/* Divider Line */}
-            <Divider />
-
-            <LoginWithOthers align="center">
-              <strong>Login&nbsp;</strong> with Others
-            </LoginWithOthers>
-            <Grid container spacing={1.5} sx={{ justifyContent: "center" }}>
-              <Grid item>
-                <SocialLoginButton
-                  variant="contained"
-                  startIcon={<GoogleIcon sx={{ scale: "125%", marginRight: "4px" }} />}
-                  sx={{ marginBottom: "10px" }} // Ensure proper spacing
-                >
-                  Login with <strong>&nbsp;Google</strong>
-                </SocialLoginButton>
-              </Grid>
-              <Grid item>
-                <SocialLoginButton
-                  variant="contained"
-                  startIcon={<FacebookIcon sx={{ scale: "150%", marginRight: "5px" }} />}
-                  sx={{ marginTop: "-10px" }} // Ensure proper spacing
-                >
-                  Login with <strong>&nbsp;Facebook</strong>
-                </SocialLoginButton>
-              </Grid>
-            </Grid>
-            <RegisterText variant="body2" align="center">
-              <span style={{ color: "black" }}>Not a member?</span>{" "}
-              <Link
-                href="#"
-                style={{ color: "#5B9DAA", textDecoration: "none" }}
-              >
-                Register now
-              </Link>
-            </RegisterText>
-          </Box>
-        </FormBox>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BackgroundBox>
         <Box
           sx={{
-            display: { xs: "none", md: "flex" },
-            justifyContent: "center",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
-            width: "683px",
-            height: "768px",
-            backgroundColor: "#d2cfc9",
-            borderTopRightRadius: "30px",
-            borderBottomRightRadius: "30px",
-            overflow: "hidden",
-            position: "relative",
+            justifyContent: "center",
           }}
         >
-          <RightBoxText>
-            Want to keep track of your gains?
-            <br /><Link
-              href=""
-              style={{ color: "#94C1C6", textDecoration: "none" }}
+          <FormBox>
+            <Typography
+              component="h1"
+              sx={{
+                mt: 2,
+                fontFamily: "Roboto, Arial, sans-serif",
+                fontSize: "17px",
+                fontWeight: 400,
+                pb: 1,
+              }}
             >
-              Sign up
-            </Link>
-            &nbsp;now!
-          </RightBoxText>
-          <img
-            src={bulkyManImage}
-            alt="Bulky man lifting weights"
-            style={{
+              Login and start bulking right now!
+            </Typography>
+            <img
+              src={barbellIcon}
+              alt="Barbell Icon"
+              width="320"
+              height="112"
+            />
+            <Box
+              component="form"
+              noValidate
+              sx={{
+                mt: 2,
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <InputBox>
+                <IconWrapper>
+                  <PersonIcon />
+                </IconWrapper>
+                <StyledTextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username" // Ensure label is clear and accessible
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </InputBox>
+              <InputBox>
+                <IconWrapper>
+                  <LockIcon />
+                </IconWrapper>
+                <StyledTextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password" // Ensure label is clear and accessible
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </InputBox>
+              <Link
+                href="#"
+                variant="body2"
+                sx={{
+                  alignSelf: "flex-start",
+                  mb: 2,
+                  fontFamily: "Roboto, Arial, sans-serif",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  pl: "150px",
+                  textDecoration: "none",
+                  color: "inherit",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                Forgot your password?
+              </Link>
+              <LoginButton type="button" variant="contained" onClick={handleNavigateToHomePage}>
+                Login
+              </LoginButton>
+
+              {/* Divider Line */}
+              <Divider />
+
+              <LoginWithOthers align="center">
+                <strong>Login&nbsp;</strong> with Others
+              </LoginWithOthers>
+              <Grid container spacing={1.5} sx={{ justifyContent: "center" }}>
+                <Grid item>
+                  <SocialLoginButton
+                    variant="contained"
+                    startIcon={<GoogleIcon sx={{ scale: "125%", marginRight: "4px" }} />}
+                    sx={{ marginBottom: "10px" }} // Ensure proper spacing
+                  >
+                    Login with <strong>&nbsp;Google</strong>
+                  </SocialLoginButton>
+                </Grid>
+                <Grid item>
+                  <SocialLoginButton
+                    variant="contained"
+                    startIcon={<FacebookIcon sx={{ scale: "150%", marginRight: "5px" }} />}
+                    sx={{ marginTop: "-10px" }} // Ensure proper spacing
+                  >
+                    Login with <strong>&nbsp;Facebook</strong>
+                  </SocialLoginButton>
+                </Grid>
+              </Grid>
+              <RegisterText variant="body2" align="center">
+                <span style={{ color: "black" }}>Not a member?</span>{" "}
+                <Link
+                  href="#"
+                  style={{ color: "#5B9DAA", textDecoration: "none" }}
+                >
+                  Register now
+                </Link>
+              </RegisterText>
+            </Box>
+          </FormBox>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+              alignItems: "center",
               width: "683px",
-              height: "683px",
-              borderRadius: "12px",
-              position: "absolute",
-              bottom: "50px",
+              height: "768px",
+              backgroundColor: "#d2cfc9",
+              borderTopRightRadius: "30px",
+              borderBottomRightRadius: "30px",
+              overflow: "hidden",
+              position: "relative",
             }}
-          />
+          >
+            <RightBoxText>
+              Want to keep track of your gains?
+              <br /><Link
+                href=""
+                style={{ color: "#94C1C6", textDecoration: "none" }}
+              >
+                Sign up
+              </Link>
+              &nbsp;now!
+            </RightBoxText>
+            <img
+              src={bulkyManImage}
+              alt="Bulky man lifting weights"
+              style={{
+                width: "683px",
+                height: "683px",
+                borderRadius: "12px",
+                position: "absolute",
+                bottom: "50px",
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
-    </BackgroundBox>
+      </BackgroundBox>
+    </ThemeProvider>
   );
 });
 
