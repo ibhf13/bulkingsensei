@@ -3,6 +3,7 @@ import Exercise from "../models/Exercise.js";
 export const getAllExercises = async (req, res) => {
   try {
     const exercises = await Exercise.find();
+    // const exercises = await Exercise.find().explain("executionStats");
     res.json(exercises);
   } catch (err) {
     console.error(err.message);
@@ -12,7 +13,7 @@ export const getAllExercises = async (req, res) => {
 
 export const getExerciseById = async (req, res) => {
   try {
-    const exercise = await Exercise.findById(req.params.id);
+    // const exercise = await Exercise.findById(req.params.id);
     if (!exercise) return res.status(404).json({ msg: "Exercise not found" });
 
     res.json(exercise);

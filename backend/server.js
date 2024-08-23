@@ -1,6 +1,6 @@
 import express from "express";
-import connectMongoDB from "./config/mongoDB.js";
 import dotenv from "dotenv";
+import connectMongooseDB from "./config/mongoose.js";
 import cors from "cors";
 import userRouter from "./routes/userRoutes.js";
 import exerciseRouter from "./routes/exerciseRoutes.js";
@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 
 // Connect Database
-connectMongoDB();
+connectMongooseDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));

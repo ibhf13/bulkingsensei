@@ -17,10 +17,17 @@ import Arm from './Pages/Exercises/Arm'
 import Forearm from './Pages/Exercises/Forearm'
 import Legs from './Pages/Exercises/Legs'
 import Glutes from './Pages/Exercises/Glutes'
+import ExerciseList from './components/ExerciseList'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
+  {
+    path: '/1',
+    element: <ExerciseList />,
+  },
   {
     path: '/',
     element: <Login />,
@@ -69,9 +76,11 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 )
