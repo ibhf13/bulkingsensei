@@ -24,6 +24,7 @@ import theme from "../styles/theme";
 import barbellIcon from "../Images/Login/23603572.png";
 import ProgressBar from "../components/ProgressBar";
 import WaterIntake from "../components/WaterIntake";
+import Sidebar from "../components/Sidebar";
 
 const MainContent = styled(Container)({
   padding: theme.spacing(3),
@@ -135,6 +136,7 @@ const HomePage = ({ user }) => {
 
   return (
     <Box sx={{ backgroundColor: '#d2cfc9', minHeight: '100vh' }}>
+      <Sidebar />
       <MainContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
