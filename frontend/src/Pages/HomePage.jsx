@@ -97,6 +97,7 @@ const RectanglePaper = styled(Paper)({
   padding: theme.spacing(3),
   backgroundColor: theme.palette.background.paper,
   borderRadius: theme.shape.borderRadius,
+  cursor: 'pointer',
 });
 
 const LargeRectanglePaper = styled(Paper)({
@@ -188,8 +189,8 @@ const HomePage = ({ user }) => {
               </Grid>
 
               <Grid item>
-                <RectanglePaper elevation={3}>
-                  <Typography variant="h6">Activity</Typography>
+                <RectanglePaper elevation={3} onClick={() => navigate("/1")}>
+                  <Typography variant="h6">Backend Excersises</Typography>
                   {/* Add Activity content here */}
                 </RectanglePaper>
               </Grid>

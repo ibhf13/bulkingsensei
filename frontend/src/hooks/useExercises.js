@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { fetchExercises } from '../api'
+import { fetchExercises } from '../api/index.api'
 
 export const useExercises = () => {
   return useQuery('exercises', fetchExercises, {

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { fetchTrainingHistory, recordTrainingSession } from '../api'
+import { fetchTrainingHistory, recordTrainingSession } from '../api/index.api'
 
 export const useTrainingHistory = () => {
   return useQuery('trainingHistory', fetchTrainingHistory)

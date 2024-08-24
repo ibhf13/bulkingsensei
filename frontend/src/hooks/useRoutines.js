@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { fetchRoutines, createRoutine } from '../api'
+import { fetchRoutines, createRoutine } from '../api/index.api'
 
 export const useRoutines = () => {
   return useQuery('routines', fetchRoutines)
