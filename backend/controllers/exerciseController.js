@@ -5,7 +5,7 @@ export const getAllExercises = async (req, res) => {
     const exercises = await Exercise.find();
     // res.json(exercises);
     res.json({
-      message: `Hello!`,
+      message: exercises,
     });
   } catch (err) {
     console.error(err.message);
