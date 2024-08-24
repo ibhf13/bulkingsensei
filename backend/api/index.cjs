@@ -1,8 +1,8 @@
-import express from "express";
-const app = express();
+// import express from "express";
+// const app = express();
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+// app.get("/", (req, res) => res.send("Express on Vercel"));
 
-app.listen(3005, () => console.log("Server ready on port 3005."));
+// app.listen(3005, () => console.log("Server ready on port 3005."));
 
-module.exports = app;
+// module.exports = app;

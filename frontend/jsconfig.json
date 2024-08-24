@@ -6,8 +6,10 @@
       "@utils/*": ["utils/*"],
       "@services/*": ["services/*"],
       "@hooks/*": ["hooks/*"],
-      "@models/*": ["models/*"]
+      "@models/*": ["models/*"],
+      "*": ["../node_modules/*"]
     },
+    "checkJs": true,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true
   },

@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import connectMongooseDB from "./config/mongoose.js";
 import cors from "cors";
-import userRouter from "./routes/userRoutes.js";
-import exerciseRouter from "./routes/exerciseRoutes.js";
-import routineRouter from "./routes/routineRoutes.js";
-import historyRouter from "./routes/historyRoutes.js";
+import userRouter from "./api/users/userRoutes.js";
+import exerciseRouter from "./api/exercises/exerciseRoutes.js";
+import routineRouter from "./api/routines/routineRoutes.js";
+import historyRouter from "./api/history/historyRoutes.js";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const app = express();
 connectMongooseDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
 // Define Routes
 app.use(cors());

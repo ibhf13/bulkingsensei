@@ -5,7 +5,6 @@ import {
 } from "../../controllers/exerciseController.js";
 
 const exerciseRouter = express.Router();
-
 exerciseRouter.get("/", getAllExercises);
 exerciseRouter.get("/:id", getExerciseById);
 
