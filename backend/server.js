@@ -23,6 +23,9 @@ app.use("/api/users", userRouter);
 app.use("/api/exercises", exerciseRouter);
 app.use("/api/routines", routineRouter);
 app.use("/api/history", historyRouter);
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+export default async (req, res) => {
+  await app(req, res);
+};

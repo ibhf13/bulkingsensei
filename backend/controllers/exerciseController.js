@@ -3,7 +3,7 @@ import Exercise from "../models/Exercise.js";
 export const getAllExercises = async (req, res) => {
   try {
     const exercises = await Exercise.find();
-    // res.json(exercises);
+    res.json(exercises);
     res.json({
       message: exercises,
     });
