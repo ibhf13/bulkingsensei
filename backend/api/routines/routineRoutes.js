@@ -4,8 +4,8 @@ import {
   getAllRoutines,
   updateRoutine,
   deleteRoutine,
-} from "../controllers/routineController.js";
-import auth from "../middleware/auth.js";
+} from "../../controllers/routineController.js";
+import auth from "../../middleware/auth.js";
 
 const routineRouter = express.Router();
 routineRouter.post("/", auth, createRoutine);

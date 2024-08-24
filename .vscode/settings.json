@@ -1,0 +1,82 @@
+{
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "workbench.startupEditor": "none",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.mouseWheelZoom": false,
+  "editor.fontSize": 15,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "markdown.trace.extension": "verbose",
+  "markdown.validate.enabled": true,
+  "workbench.editorAssociations": {
+    "*.xlsm": "gc-excelviewer-excel-editor"
+  },
+  "notebook.lineNumbers": "on",
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.minimap.enabled": false,
+  "[python]": {
+    "editor.formatOnType": false
+  },
+  "explorer.confirmDelete": false,
+
+  "security.workspace.trust.untrustedFiles": "open",
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "terminal.integrated.env.windows": {},
+  "react-native-tools.showUserTips": false,
+  "json.schemas": [],
+  "editor.fontVariations": false,
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  "git.confirmSync": false,
+  "git.openRepositoryInParentFolders": "never",
+  "cSpell.userWords": ["dataclumps"],
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false
+  },
+  "cSpell.language": "en,de-DE",
+  "github.copilot.advanced": {},
+  "emmet.preferences": {},
+  "javascript.suggest.autoImports": true,
+  "javascript.suggest.paths": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.suggestSelection": "first",
+  "editor.suggest.localityBonus": true,
+  "editor.wordBasedSuggestions": false,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.tabCompletion": "on",
+  "eslint.alwaysShowStatus": true,
+  "files.autoSave": "onFocusChange",
+  "workbench.iconTheme": "material-icon-theme",
+  "breadcrumbs.enabled": true,
+  "explorer.compactFolders": false,
+
+  "eslint.validate": ["javascript", "javascriptreact"],
+  "git.ignoreRebaseWarning": true
+}

@@ -3,8 +3,8 @@ import {
   recordSession,
   getAllSessions,
   getSessionById,
-} from "../controllers/historyController.js";
-import auth from "../middleware/auth.js";
+} from "../../controllers/historyController.js";
+import auth from "../../middleware/auth.js";
 
 const historyRouter = express.Router();
 historyRouter.post("/", auth, recordSession);

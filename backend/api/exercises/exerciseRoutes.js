@@ -2,7 +2,7 @@ import express from "express";
 import {
   getAllExercises,
   getExerciseById,
-} from "../controllers/exerciseController.js";
+} from "../../controllers/exerciseController.js";
 
 const exerciseRouter = express.Router();
 
