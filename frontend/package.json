@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fontsource/nanum-gothic": "^5.0.18",
     "@fontsource/poppins": "^5.0.14",
     "@fontsource/roboto": "^5.0.14",
     "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.16.6",
+    "@mui/material": "^5.16.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -29,7 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cleanwin": "rd /s /q node_modules && yarn cache clean --force",
-    "clean": "rm -rf node_modules && yarn cache clean --force"
+    "clean": "rm -rf node_modules && npm cache clean --force"
   },
   "eslintConfig": {
     "extends": [
