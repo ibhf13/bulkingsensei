@@ -1,40 +1,87 @@
-import dotenv from "dotenv";
 import mongoose from "mongoose";
-import connectDB from "../config/db.js";
+import dotenv from "dotenv";
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
-export const seedUsers = async () => {
-  await connectDB();
+dotenv.config();
 
-  const users = [
-    {
-      email: "john.doe@example.com",
-      password: "password123", // This will be hashed automatically
+const seedUsers = [
+  {
+    email: "alkan@example.com",
+    password: "password123",
+    personalInfo: {
       age: 28,
-      weight: 75,
+      weight: 80,
       height: 180,
-      bmi: 23.1,
-      address: "123 Fitness St, Workout City, CA",
-      routines: [], // Add valid routine IDs if available
+      bmi: 24.7,
     },
-    {
-      email: "jane.smith@example.com",
-      password: "password456", // This will be hashed automatically
+    address: {
+      street: "Hauptstraße",
+      houseNumber: "123",
+      plz: "10115",
+      city: "Berlin",
+    },
+    photoUrl: "https://example.com/photo1.jpg",
+  },
+  {
+    email: "wolfgang@example.com",
+    password: "password456",
+    personalInfo: {
       age: 32,
-      weight: 68,
+      weight: 65,
       height: 165,
-      bmi: 24.9,
-      address: "456 Health Ave, Gymtown, TX",
-      routines: [], // Add valid routine IDs if available
+      bmi: 23.9,
     },
-  ];
+    address: {
+      street: "Friedrichstraße",
+      houseNumber: "45",
+      plz: "20354",
+      city: "Hamburg",
+    },
+    photoUrl: "https://example.com/photo2.jpg",
+  },
+  {
+    email: "bob@example.com",
+    password: "password789",
+    personalInfo: {
+      age: 24,
+      weight: 75,
+      height: 175,
+      bmi: 24.5,
+    },
+    address: {
+      street: "Königsallee",
+      houseNumber: "67",
+      plz: "40212",
+      city: "Düsseldorf",
+    },
+    photoUrl: "https://example.com/photo3.jpg",
+  },
+];
 
+const seedDatabase = async () => {
   try {
-    await User.insertMany(users);
-    console.log("User data has been added successfully.");
-  } catch (err) {
-    console.error(err);
-  } finally {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected to MongoDB");
+
+    await User.deleteMany({});
+    console.log("Deleted existing users");
+
+    for (const userData of seedUsers) {
+      // const hashedPassword = await bcrypt.hash(userData.password, 10);
+      const user = new User({
+        ...userData,
+      });
+
+      await user.save();
+    }
+
+    console.log("Seed data inserted successfully");
     mongoose.connection.close();
+  } catch (error) {
+    console.error("Error seeding database:", error);
+    process.exit(1);
   }
 };
+
+seedDatabase();

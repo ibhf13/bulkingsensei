@@ -5,7 +5,6 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 
 const ExerciseList = () => {
   const { data: exercises, isLoading, error } = useExercises()
-  console.log({ exercises });
   if (isLoading)
     return (
       <Box display="flex" justifyContent="center" mt={4}>
