@@ -5,7 +5,7 @@ import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, CameraAlt as 
 import { useUserInfo } from '../hooks/useUserInfo'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
-import { updateUserInfo, uploadUserPhoto } from '../api/index.api' // You'll need to create these API functions
+import { updateUserInfo, uploadUserPhoto, API_BASE_URL } from '../api/index.api' // You'll need to create these API functions
 
 const ProfilePaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -53,6 +53,8 @@ const Profile = () => {
   const { isAuthenticated } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [userInfo, setUserInfo] = useState(null)
+  const [photoKey, setPhotoKey] = useState(Date.now())
+  const [photoUrl, setPhotoUrl] = useState(null)
   const [photo, setPhoto] = useState(null)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
@@ -66,12 +68,21 @@ const Profile = () => {
     }
   }, [fetchedUserInfo])
 
+  useEffect(() => {
+    if (userInfo && userInfo.photoUrl) {
+      const fullPhotoUrl = `${API_BASE_URL}${userInfo.photoUrl}`
+      console.log('Setting photo URL:', fullPhotoUrl) // Debugging line
+      setPhotoUrl(fullPhotoUrl)
+    }
+  }, [userInfo])
+
   if (!isAuthenticated) {
     return <Navigate to="/login" />
   }
 
   if (isUserLoading || !userInfo)
     return <CircularProgress sx={{ position: 'absolute', top: '20%', left: '25%', minWidth: '25%', minHeight: '20%' }} />
+  // @ts-ignore
   if (userError) return <Typography color="error">Error: {userError.message}</Typography>
 
   const handleEdit = () => {
@@ -99,6 +110,7 @@ const Profile = () => {
       setUserInfo(updatedUserInfo)
       setIsEditing(false)
       setSnackbarMessage('Profile updated successfully!')
+      setPhotoKey(Date.now()) // Force re-render of image
       setSnackbarOpen(true)
     } catch (error) {
       console.error('Error updating profile:', error)
@@ -134,18 +146,17 @@ const Profile = () => {
   const handlePhotoChange = async e => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
-      setPhoto(file)
+      console.log('Selected file:', file)
       try {
         setIsUploadingPhoto(true)
         const formData = new FormData()
         formData.append('photo', file)
         const response = await uploadUserPhoto(formData)
-        console.log('Upload photo response:', response)
+        console.log('Upload response:', response)
         if (response && response.photoUrl) {
-          setUserInfo(prevState => ({
-            ...prevState,
-            photoUrl: response.photoUrl,
-          }))
+          const fullPhotoUrl = `${API_BASE_URL}${response.photoUrl}`
+          console.log('Setting new photo URL:', fullPhotoUrl)
+          setPhotoUrl(fullPhotoUrl)
           setSnackbarMessage('Photo uploaded successfully!')
         } else {
           throw new Error('No photo URL received from server')
@@ -168,7 +179,6 @@ const Profile = () => {
     const heightInMeters = height / 100
     return (weight / (heightInMeters * heightInMeters)).toFixed(1)
   }
-
   return (
     <Box sx={{ maxWidth: 800, margin: '0 auto', p: 2, mt: '10vh' }}>
       <ProfilePaper elevation={3}>
@@ -178,10 +188,10 @@ const Profile = () => {
               <Avatar
                 sx={{ width: 100, height: 100, bgcolor: 'primary.main' }}
                 alt={userInfo.email}
-                src={userInfo.photoUrl || ''} // Provide a fallback empty string
+                src={photoUrl || ''}
                 onError={e => {
                   console.error('Error loading image:', e)
-                  console.log('Attempted image URL:', userInfo.photoUrl)
+                  console.log('Attempted image URL:', photoUrl)
                 }}
               />
               <CameraIconButton onClick={triggerPhotoUpload} disabled={isUploadingPhoto}>

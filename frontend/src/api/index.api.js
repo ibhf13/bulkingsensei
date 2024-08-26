@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+export const API_BASE_URL = 'https://bulkingsensei-backend.vercel.app/api'
+// export const API_BASE_URL = 'http://localhost:3000/api'
+
 const api = axios.create({
-  // baseURL: 'http://localhost:5000/api',
-  baseURL: 'https://bulkingsensei-backend.vercel.app/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -44,13 +46,14 @@ export const updateUserInfo = async userData => {
 
 export const uploadUserPhoto = async formData => {
   try {
+    console.log('Uploading photo...')
     const response = await api.post('/users/upload-photo', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-    console.log('Upload photo response:', response.data)
-    return response.data // This should contain { photoUrl: '...' }
+    console.log('Upload response:', response.data)
+    return response.data
   } catch (error) {
     console.error('Error uploading photo:', error)
     throw error

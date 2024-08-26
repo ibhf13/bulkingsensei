@@ -61,15 +61,19 @@ export const loginUser = async (req, res) => {
 export const getUserInfo = async (req, res) => {
   try {
     const userId = req.userId;
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select(
+      "-password -photoData -photoContentType"
+    );
 
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
 
+    console.log("User info retrieved:", user);
+
     res.json(user);
   } catch (err) {
-    console.error(err);
+    console.error("Error in getUserInfo:", err);
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
@@ -113,32 +117,43 @@ if (!fs.existsSync(uploadsDir)) {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadsDir);
+    cb(null, "uploads/"); // make sure this folder exists
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // limit file size to 5MB
+  },
+});
 
 export const uploadPhoto = [
-  upload.single("photo"),
+  upload.single("photo"), // 'photo' should match the field name in your form data
   async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ msg: "No file uploaded" });
       }
 
+      console.log("Uploaded file:", req.file);
+
       const userId = req.userId;
-      const photoUrl = `${req.protocol}://${req.get("host")}/uploads/${
-        req.file.filename
-      }`;
-      console.log("Generated photo URL:", photoUrl);
+      const photoPath = `/uploads/${req.file.filename}`; // Use the filename given by multer
+
+      console.log("Photo path to be saved:", photoPath);
 
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { photoUrl },
+        {
+          photoUrl: photoPath,
+          // Remove these if you're not storing the file in the database
+          // photoData: req.file.buffer,
+          // photoContentType: req.file.mimetype
+        },
         { new: true }
       );
 
@@ -146,11 +161,32 @@ export const uploadPhoto = [
         return res.status(404).json({ msg: "User not found" });
       }
 
-      console.log("Sending response:", { photoUrl });
-      res.json({ photoUrl });
+      console.log("Updated user:", updatedUser);
+
+      res.json({
+        msg: "Photo uploaded successfully",
+        photoUrl: photoPath,
+      });
     } catch (err) {
-      console.error(err);
+      console.error("Error in uploadPhoto:", err);
       res.status(500).json({ msg: "Server error", error: err.message });
     }
   },
 ];
+
+export const getPhoto = async (req, res) => {
+  try {
+    const userId = req.query.userId || req.userId;
+    const user = await User.findById(userId);
+
+    if (!user || !user.photoData) {
+      return res.status(404).json({ msg: "Photo not found" });
+    }
+
+    res.set("Content-Type", user.photoContentType);
+    res.send(user.photoData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error", error: err.message });
+  }
+};

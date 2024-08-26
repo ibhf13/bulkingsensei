@@ -17,6 +17,8 @@ const UserSchema = new mongoose.Schema({
     city: { type: String, default: "" },
   },
   photoUrl: { type: String, default: null },
+  photoData: { type: Buffer },
+  photoContentType: { type: String },
 });
 
 // Password hashing middleware
