@@ -26,7 +26,6 @@ app.use(cors());
 
 // Serve static files from the uploads directory
 app.use("/uploads", express.static(join(__dirname, "uploads")));
-// app.use("/uploads", express.static("uploads"));
 
 // Define Routes
 app.use("/api/users", userRouter);
@@ -34,9 +33,21 @@ app.use("/api/exercises", exerciseRouter);
 app.use("/api/routines", routineRouter);
 app.use("/api/history", historyRouter);
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+// Add a root route
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
+});
 
-export default async (req, res) => {
-  await app(req, res);
-};
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
+// Only start the server if we're not in a Vercel environment
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+}
+
+export default app;
