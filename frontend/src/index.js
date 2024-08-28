@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import theme from './styles/theme'
 
-// Pages
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import ForgotPassword from './components/ForgotPassword'

@@ -10,7 +10,7 @@ export const useCreateRoutine = () => {
 
   return useMutation(createRoutine, {
     onSuccess: () => {
-      queryClient.invalidateQueries('routines') // Invalidate and refetch routines after creating a new one
+      queryClient.invalidateQueries('routines')
     },
   })
 }

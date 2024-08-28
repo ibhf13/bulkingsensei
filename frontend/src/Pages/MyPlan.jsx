@@ -5,12 +5,14 @@ import theme from '../styles/theme'
 import Logo from '../components/Logo'
 import { useExercises } from '../hooks/useExercises'
 import MusclesList from '../components/MusclesList'
+import Sidebar from '../components/Sidebar'
 
 const MainContent = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
+  flexGrow: 1,
   backgroundColor: '#d2cfc9',
   padding: theme.spacing(6),
+  minHeight: '100vh',
+  Width: '80%',
 })
 
 const ButtonBox = styled(Paper)({
@@ -50,25 +52,27 @@ const MyPlan = () => {
 
   if (muscleTypes.isLoading) {
     return (
-      <MainContent>
-        <Logo />
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-          <CircularProgress />
-        </Box>
-      </MainContent>
+      <Box sx={{ display: 'flex', backgroundColor: '#d2cfc9', minHeight: '100vh' }}>
+        <Sidebar />
+        <MainContent>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+            <CircularProgress />
+          </Box>
+        </MainContent>
+      </Box>
     )
   }
 
   return (
     <MainContent>
-      <Logo />
-
+      <Sidebar />
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
-          flex: 1,
+          marginLeft: '20%',
+          gap: theme.spacing(3),
         }}
       >
         {muscleTypes.data?.map(muscleType => (

@@ -1,114 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import {
-  Box,
-  CircularProgress,
-  Button,
-  Typography,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  IconButton,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import SettingsIcon from '@mui/icons-material/Settings';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { Box, CircularProgress, Button, Typography, Dialog, DialogActions, DialogContent, DialogTitle, TextField, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import SettingsIcon from '@mui/icons-material/Settings'
+import WaterDropIcon from '@mui/icons-material/WaterDrop'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
 
 const GlassOfWaterIcon = ({ progress }) => {
   return (
-    <svg viewBox="0 0 24 24" style={{ width: '50px', height: '50px', fill: 'none' }}> 
-      <rect
-        x="7"
-        y={2 + 20 - (progress / 100) * 20}
-        width="10"
-        height={(progress / 100) * 20}
-        fill="#5CB5E1"
-        stroke="none"
-      />
+    <svg viewBox="0 0 24 24" style={{ width: '50px', height: '50px', fill: 'none' }}>
+      <rect x="7" y={2 + 20 - (progress / 100) * 20} width="10" height={(progress / 100) * 20} fill="#5CB5E1" stroke="none" />
       <rect x="7" y="2" width="10" height="20" rx="2" ry="2" stroke="black" strokeWidth="1" fill="none" />
     </svg>
-  );
-};
+  )
+}
 
 GlassOfWaterIcon.propTypes = {
   progress: PropTypes.number.isRequired,
-};
+}
 
 const WaterIntake = () => {
-  const [goal, setGoal] = useState(2000);
-  const [intake, setIntake] = useState(0);
-  const [goalDialogOpen, setGoalDialogOpen] = useState(false);
-  const [intakeDialogOpen, setIntakeDialogOpen] = useState(false);
-  const [inputIntake, setInputIntake] = useState(200);
-  const [inputGoal, setInputGoal] = useState(goal);
+  const [goal, setGoal] = useState(2000)
+  const [intake, setIntake] = useState(0)
+  const [goalDialogOpen, setGoalDialogOpen] = useState(false)
+  const [intakeDialogOpen, setIntakeDialogOpen] = useState(false)
+  const [inputIntake, setInputIntake] = useState(200)
+  const [inputGoal, setInputGoal] = useState(goal)
 
-  const progress = (intake / goal) * 100;
+  const progress = (intake / goal) * 100
 
   useEffect(() => {
-    const now = new Date();
-    
-    const millisUntilMidnight = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1,
-      0,
-      0,
-      0,
-      0
-    ).getTime() 
-    
+    const now = new Date()
+
+    const millisUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0).getTime()
+
     const timeout = setTimeout(() => {
-      setIntake(0);
-    }, millisUntilMidnight);
+      setIntake(0)
+    }, millisUntilMidnight)
 
-    return () => clearTimeout(timeout);
-  }, [intake]);
+    return () => clearTimeout(timeout)
+  }, [intake])
 
-  const handleGoalDialogOpen = (e) => {
-    e.stopPropagation();
-    setInputGoal(goal);
-    setGoalDialogOpen(true);
-  };
+  const handleGoalDialogOpen = e => {
+    e.stopPropagation()
+    setInputGoal(goal)
+    setGoalDialogOpen(true)
+  }
 
   const handleGoalDialogClose = () => {
-    setGoalDialogOpen(false);
-  };
+    setGoalDialogOpen(false)
+  }
 
   const handleIntakeDialogOpen = () => {
-    setInputIntake(250);
-    setIntakeDialogOpen(true);
-  };
+    setInputIntake(250)
+    setIntakeDialogOpen(true)
+  }
 
   const handleIntakeDialogClose = () => {
-    setIntakeDialogOpen(false);
-  };
+    setIntakeDialogOpen(false)
+  }
 
-  const handleGoalSubmit = (e) => {
-    e.preventDefault();
+  const handleGoalSubmit = e => {
+    e.preventDefault()
     if (inputGoal > 0) {
-      setGoal(inputGoal);
+      setGoal(inputGoal)
       if (intake > inputGoal) {
-        setIntake(inputGoal);
+        setIntake(inputGoal)
       }
-      setGoalDialogOpen(false);
+      setGoalDialogOpen(false)
     }
-  };
+  }
 
-  const handleIntakeSubmit = (e) => {
-    e.preventDefault();
+  const handleIntakeSubmit = e => {
+    e.preventDefault()
     if (inputIntake > 0) {
-      setIntake((prevIntake) => prevIntake + inputIntake);
-      setIntakeDialogOpen(false);
+      setIntake(prevIntake => prevIntake + inputIntake)
+      setIntakeDialogOpen(false)
     }
-  };
+  }
 
-  const handleResetIntake = (e) => {
-    e.stopPropagation();
-    setIntake(0);
-  };
+  const handleResetIntake = e => {
+    e.stopPropagation()
+    setIntake(0)
+  }
 
   return (
     <Box>
@@ -116,8 +90,8 @@ const WaterIntake = () => {
         variant="outlined"
         onClick={handleIntakeDialogOpen}
         sx={{
-          width: '200px',
-          height: '200px',
+          width: '100%',
+          height: '100%',
           borderRadius: '12px',
           position: 'relative',
           padding: '16px',
@@ -227,7 +201,7 @@ const WaterIntake = () => {
               position: 'absolute',
               right: 8,
               top: 8,
-              color: (theme) => theme.palette.grey[500],
+              color: theme => theme.palette.grey[500],
             }}
           >
             <CloseIcon />
@@ -241,7 +215,7 @@ const WaterIntake = () => {
             type="number"
             fullWidth
             value={inputGoal}
-            onChange={(e) => setInputGoal(parseInt(e.target.value) || 0)}
+            onChange={e => setInputGoal(parseInt(e.target.value) || 0)}
             inputProps={{
               step: 50,
               min: 0,
@@ -265,7 +239,7 @@ const WaterIntake = () => {
               position: 'absolute',
               right: 8,
               top: 8,
-              color: (theme) => theme.palette.grey[500],
+              color: theme => theme.palette.grey[500],
             }}
           >
             <CloseIcon />
@@ -279,7 +253,7 @@ const WaterIntake = () => {
             type="number"
             fullWidth
             value={inputIntake}
-            onChange={(e) => setInputIntake(parseInt(e.target.value) || 0)}
+            onChange={e => setInputIntake(parseInt(e.target.value) || 0)}
             inputProps={{
               step: 50,
               min: 0,
@@ -292,7 +266,7 @@ const WaterIntake = () => {
         </DialogActions>
       </Dialog>
     </Box>
-  );
-};
+  )
+}
 
-export default WaterIntake;
+export default WaterIntake

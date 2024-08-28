@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Typography, LinearProgress, styled } from '@mui/material';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Box, Typography, LinearProgress, styled } from '@mui/material'
 
 const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -8,9 +8,9 @@ const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
   backgroundColor: theme.palette.grey[300],
   '& .MuiLinearProgress-bar': {
     borderRadius: 5,
-    backgroundColor: theme.palette.primary.main, // Same color as the login button
+    backgroundColor: theme.palette.primary.main,
   },
-}));
+}))
 
 const ProgressBar = ({ value }) => {
   return (
@@ -18,11 +18,11 @@ const ProgressBar = ({ value }) => {
       <Typography color="black" fontStyle="bold">{`${value}%`}</Typography>
       <StyledLinearProgress variant="determinate" value={value} />
     </Box>
-  );
-};
+  )
+}
 
 ProgressBar.propTypes = {
   value: PropTypes.number.isRequired,
-};
+}
 
-export default ProgressBar;
+export default ProgressBar

@@ -5,7 +5,7 @@ import { Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, CameraAlt as 
 import { useUserInfo } from '../hooks/useUserInfo'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
-import { updateUserInfo, uploadUserPhoto, API_BASE_URL } from '../api/index.api' // You'll need to create these API functions
+import { updateUserInfo, uploadUserPhoto, API_BASE_URL } from '../api/index.api'
 
 const ProfilePaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -71,7 +71,7 @@ const Profile = () => {
   useEffect(() => {
     if (userInfo && userInfo.photoUrl) {
       const fullPhotoUrl = `${API_BASE_URL}${userInfo.photoUrl}`
-      console.log('Setting photo URL:', fullPhotoUrl) // Debugging line
+      console.log('Setting photo URL:', fullPhotoUrl)
       setPhotoUrl(fullPhotoUrl)
     }
   }, [userInfo])
@@ -110,7 +110,7 @@ const Profile = () => {
       setUserInfo(updatedUserInfo)
       setIsEditing(false)
       setSnackbarMessage('Profile updated successfully!')
-      setPhotoKey(Date.now()) // Force re-render of image
+      setPhotoKey(Date.now())
       setSnackbarOpen(true)
     } catch (error) {
       console.error('Error updating profile:', error)
@@ -140,7 +140,7 @@ const Profile = () => {
 
   const handleCancel = () => {
     setIsEditing(false)
-    setUserInfo(fetchedUserInfo) // Reset to original data
+    setUserInfo(fetchedUserInfo)
   }
 
   const handlePhotoChange = async e => {
