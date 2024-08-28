@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import User from "../models/User.js";
-import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -68,19 +67,15 @@ const seedDatabase = async () => {
     console.log("Deleted existing users");
 
     for (const userData of seedUsers) {
-      // const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const user = new User({
-        ...userData,
-      });
-
+      const user = new User(userData);
       await user.save();
     }
 
     console.log("Seed data inserted successfully");
-    mongoose.connection.close();
   } catch (error) {
     console.error("Error seeding database:", error);
-    process.exit(1);
+  } finally {
+    mongoose.connection.close();
   }
 };
 

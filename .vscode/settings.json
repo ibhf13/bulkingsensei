@@ -108,7 +108,7 @@
 	},
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "explicit"
 	},
 	"terminal.integrated.env.windows": {},
 	"json.schemas": [],
@@ -138,7 +138,7 @@
 	"javascript.updateImportsOnFileMove.enabled": "always",
 	"editor.suggestSelection": "first",
 	"editor.suggest.localityBonus": true,
-	"editor.wordBasedSuggestions": false,
+	"editor.wordBasedSuggestions": "off",
 	"editor.quickSuggestions": {
 		"other": true,
 		"comments": false,

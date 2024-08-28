@@ -1,19 +1,17 @@
-import React from "react";
-import { Typography, Box, Paper } from "@mui/material";
-import { styled } from "@mui/system";
-import { useNavigate } from "react-router-dom";
-import theme from "../styles/theme";
-import Logo from "../components/Logo";
+import React, { useState, useCallback } from 'react'
+import { Typography, Box, Paper, CircularProgress } from '@mui/material'
+import { styled } from '@mui/system'
+import theme from '../styles/theme'
+import Logo from '../components/Logo'
+import { useExercises } from '../hooks/useExercises'
+import MusclesList from '../components/MusclesList'
 
 const MainContent = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#d2cfc9',
   padding: theme.spacing(6),
-
-
-});
-
+})
 
 const ButtonBox = styled(Paper)({
   display: 'flex',
@@ -32,49 +30,74 @@ const ButtonBox = styled(Paper)({
     transform: 'scale(0.98)',
     boxShadow: theme.shadows[12],
   },
-});
+})
 
 const MyPlan = () => {
-  const navigate = useNavigate();
+  const { muscleTypes, getExercisesByMuscleType } = useExercises()
+  const [selectedMuscleType, setSelectedMuscleType] = useState(null)
+  const [isMusclesToOpen, setIsMusclesToOpen] = useState(false)
 
-  const handleButtonClick = (path) => {
-    navigate(path);
-  };
-  const Muscles = ['Biceps', 'Shoulder', 'Chest', 'Back', 'Arm', 'Forearm', 'Legs', 'Glutes'];
+  const handleMuscleTypeClick = useCallback((muscleTypeId, muscleName) => {
+    setSelectedMuscleType({ id: muscleTypeId, name: muscleName })
+    setIsMusclesToOpen(true)
+  }, [])
+
+  const handleCloseExercises = useCallback(() => {
+    setIsMusclesToOpen(false)
+  }, [])
+
+  const { data: exercisesData, isLoading: isLoadingExercises } = getExercisesByMuscleType(selectedMuscleType?.id || '')
+
+  if (muscleTypes.isLoading) {
+    return (
+      <MainContent>
+        <Logo />
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+          <CircularProgress />
+        </Box>
+      </MainContent>
+    )
+  }
 
   return (
     <MainContent>
-
       <Logo />
 
-      {/* Main Content Area */}
       <Box
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
           flex: 1,
         }}
       >
-        {Muscles.map((muscle) => (
+        {muscleTypes.data?.map(muscleType => (
           <Box
-            key={muscle}
+            key={muscleType._id}
             sx={{
-              flex: "1 0 calc(50% - 20px)",
-              maxWidth: "calc(50% - 20px)",
-              marginTop: "24px",
+              flex: '1 0 calc(50% - 20px)',
+              maxWidth: 'calc(50% - 20px)',
+              marginTop: '24px',
             }}
           >
-            <ButtonBox onClick={() => handleButtonClick(`/${muscle.toLowerCase()}`)}>
-              <Typography variant="h5" sx={{ fontFamily: "Nanum Gothic, sans-serif" }}>
-                {muscle}
+            <ButtonBox onClick={() => handleMuscleTypeClick(muscleType._id, muscleType.name)}>
+              <Typography variant="h5" sx={{ fontFamily: 'Nanum Gothic, sans-serif' }}>
+                {muscleType.name}
               </Typography>
             </ButtonBox>
           </Box>
         ))}
       </Box>
+
+      <MusclesList
+        isOpen={isMusclesToOpen}
+        onClose={handleCloseExercises}
+        exercises={exercisesData || []}
+        muscleType={selectedMuscleType?.name}
+        isLoading={isLoadingExercises}
+      />
     </MainContent>
   )
 }
 
-export default MyPlan;
+export default MyPlan

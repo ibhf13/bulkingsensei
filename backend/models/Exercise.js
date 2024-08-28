@@ -7,6 +7,11 @@ const ExerciseSchema = new mongoose.Schema({
   defaultSets: { type: Number, required: true },
   defaultReps: { type: Number, required: true },
   weight: { type: Number, required: false },
+  muscleType: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "MuscleType",
+    required: true,
+  },
 });
 
 export default mongoose.model("Exercise", ExerciseSchema);

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const API_BASE_URL = 'https://bulkingsensei-backend.vercel.app/api'
-// export const API_BASE_URL = 'http://localhost:3000/api'
+// export const API_BASE_URL = 'https://bulkingsensei-backend.vercel.app/api'
+export const API_BASE_URL = 'http://localhost:3000/api'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -26,7 +26,7 @@ api.interceptors.request.use(
 export const getUserInfo = async () => {
   try {
     const { data } = await api.get('/users/info')
-    console.log('User info received:', data) // Log the received data
+    console.log('User info received:', data)
     return data
   } catch (error) {
     console.error('Error fetching user info:', error)
@@ -83,30 +83,84 @@ export const registerUser = async userData => {
   }
 }
 
-// Exercise API
-export const fetchExercises = async () => {
-  const { data } = await api.get('/exercises')
-  return data
+// Exercise related API calls
+export const fetchAllExercises = async () => {
+  try {
+    const { data } = await api.get('/exercises')
+    return data
+  } catch (error) {
+    console.error('Error fetching all exercises:', error)
+    throw error
+  }
 }
 
-// Routine API
+export const fetchMuscleTypes = async () => {
+  try {
+    const { data } = await api.get('/exercises/muscle-types')
+    return data
+  } catch (error) {
+    console.error('Error fetching muscle types:', error)
+    throw error
+  }
+}
+
+export const fetchExercisesByMuscleType = async muscleTypeId => {
+  try {
+    const { data } = await api.get(`/exercises/muscle-type/${muscleTypeId}`)
+    return data
+  } catch (error) {
+    console.error(`Error fetching exercises for muscle type ${muscleTypeId}:`, error)
+    throw error
+  }
+}
+
+// Routine related API calls
 export const fetchRoutines = async () => {
-  const { data } = await api.get('/routines')
-  return data
+  try {
+    const { data } = await api.get('/routines')
+    return data
+  } catch (error) {
+    console.error('Error fetching routines:', error)
+    throw error
+  }
 }
 
 export const createRoutine = async routine => {
-  const { data } = await api.post('/routines', routine)
-  return data
+  try {
+    const { data } = await api.post('/routines', routine)
+    return data
+  } catch (error) {
+    console.error('Error creating routine:', error)
+    throw error
+  }
 }
 
-// Training History API
+// Training History related API calls
 export const recordTrainingSession = async session => {
-  const { data } = await api.post('/history', session)
-  return data
+  try {
+    const { data } = await api.post('/history', session)
+    return data
+  } catch (error) {
+    console.error('Error recording training session:', error)
+    throw error
+  }
 }
 
 export const fetchTrainingHistory = async () => {
-  const { data } = await api.get('/history')
-  return data
+  try {
+    const { data } = await api.get('/history')
+    return data
+  } catch (error) {
+    console.error('Error fetching training history:', error.response || error)
+    throw error.response?.data || error
+  }
+}
+export const saveTrainingEntry = async trainingData => {
+  try {
+    const { data } = await api.post('/history', trainingData)
+    return data
+  } catch (error) {
+    console.error('Error saving training entry:', error)
+    throw error
+  }
 }

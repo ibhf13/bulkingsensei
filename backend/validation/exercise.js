@@ -6,6 +6,7 @@ const exerciseSchema = Joi.object({
   gifUrl: Joi.string().uri().allow(""),
   defaultSets: Joi.number().integer().min(1).allow(null),
   defaultReps: Joi.number().integer().min(1).allow(null),
+  muscleTypeId: Joi.string().required(), // Add this line for muscleType
 });
 
 export default exerciseSchema;

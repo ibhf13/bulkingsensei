@@ -5,10 +5,18 @@ const TrainingHistorySchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   exercises: [
     {
-      exerciseId: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
-      sets: Number,
-      reps: Number,
-      weight: Number,
+      exerciseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Exercise",
+        required: true,
+      },
+      sets: { type: Number, required: true },
+      reps: { type: Number, required: true },
+      weight: { type: Number },
+      duration: {
+        value: { type: Number },
+        unit: { type: String, enum: ["seconds", "minutes"] },
+      },
     },
   ],
 });

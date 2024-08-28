@@ -17,6 +17,10 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
+// config({
+//   token: process.env.BLOB_READ_WRITE_TOKEN,
+// });
+
 // Connect Database
 connectMongooseDB();
 
@@ -46,8 +50,19 @@ app.use((err, req, res, next) => {
 
 // Only start the server if we're not in a Vercel environment
 if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5001;
-  app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+  const PORT = process.env.PORT || 5000;
+  const server = app.listen(PORT, () =>
+    console.log(`Server started on port ${PORT}`)
+  );
+
+  server.on("error", (e) => {
+    // @ts-ignore
+    if (e.code === "EADDRINUSE") {
+      console.log("Port 5000 is busy, trying port 5001");
+      server.close();
+      app.listen(5001, () => console.log("Server started on port 5001"));
+    }
+  });
 }
 
 export default app;
