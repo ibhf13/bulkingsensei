@@ -12,6 +12,8 @@ import WaterIntake from '../components/WaterIntake'
 import Sidebar from '../components/Sidebar'
 import { useUserInfo } from '../hooks/useUserInfo'
 import DashboardProfile from '../components/DashboardProfile'
+import { useTrainingHistory } from '../hooks/useTrainingHistory'
+import StatisticsPreview from '../components/StatisticsPreview '
 
 const MainContent = styled(Box)(({ theme }) => ({
   flexGrow: 1,
@@ -56,6 +58,7 @@ const HomePage = ({ user }) => {
   const [goals, setGoals] = useState([])
   const [goalDialogOpen, setGoalDialogOpen] = useState(false)
   const [newGoal, setNewGoal] = useState('')
+  const { data: trainingHistory, isLoading: isTrainingHistoryLoading } = useTrainingHistory()
 
   useEffect(() => {
     if (fetchedUserInfo) {
@@ -152,10 +155,7 @@ const HomePage = ({ user }) => {
           </Grid>
           <Grid item xs={12}>
             <DashboardCard>
-              <Typography variant="h6" gutterBottom>
-                Statistics
-              </Typography>
-              <Typography variant="body1">Detailed statistics and analytics will be displayed here.</Typography>
+              <StatisticsPreview />
             </DashboardCard>
           </Grid>
         </Grid>
