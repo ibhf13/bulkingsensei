@@ -5,7 +5,7 @@ import { styled } from '@mui/system'
 
 const ProfileContainer = styled(Box)(({ theme }) => ({
   width: '270px',
-  height: 'calc(100vh - 40px)', // Full height minus top and bottom margins
+  height: '90%',
   position: 'fixed',
   right: '20px',
   top: '20px',

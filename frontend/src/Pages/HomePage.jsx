@@ -178,7 +178,6 @@ const HomePage = ({ user }) => {
       <DashboardProfile
         user={{
           name: `${userInfo?.personalInfo.name} ${userInfo?.personalInfo.lastName}` ?? '',
-
           avatar: userInfo?.photoUrl ?? '',
           email: userInfo?.email ?? '',
           city: userInfo?.address?.city ?? '',

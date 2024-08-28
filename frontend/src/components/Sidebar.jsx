@@ -12,7 +12,7 @@ import Logo from './Logo'
 
 const SidebarContainer = styled(Box)(({ theme }) => ({
   width: '280px',
-  height: 'calc(100vh - 40px)',
+  height: '90%',
   position: 'fixed',
   left: '20px',
   top: '20px',
