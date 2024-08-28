@@ -84,8 +84,8 @@ const HomePage = ({ user }) => {
     <Box sx={{ display: 'flex', backgroundColor: '#d2cfc9', minHeight: '100vh' }}>
       <Sidebar />
       <MainContent>
-        <Typography variant="h4" sx={{ mb: 3, color: theme.palette.primary.main }}>
-          Welcome Back, {user.name}!
+        <Typography variant="h4" sx={{ mb: 3, color: '#3fa2ad', fontWeight: 'bold' }}>
+          Welcome Back, {userInfo?.personalInfo.name}!
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
@@ -177,8 +177,9 @@ const HomePage = ({ user }) => {
       </MainContent>
       <DashboardProfile
         user={{
-          name: userInfo?.name ?? '',
-          avatar: user.avatar,
+          name: `${userInfo?.personalInfo.name} ${userInfo?.personalInfo.lastName}` ?? '',
+
+          avatar: userInfo?.photoUrl ?? '',
           email: userInfo?.email ?? '',
           city: userInfo?.address?.city ?? '',
         }}
@@ -187,22 +188,6 @@ const HomePage = ({ user }) => {
       />
     </Box>
   )
-}
-
-HomePage.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    avatar: PropTypes.string,
-    city: PropTypes.string.isRequired,
-  }).isRequired,
-}
-
-HomePage.defaultProps = {
-  user: {
-    name: 'User Name',
-    avatar: '',
-    city: 'City',
-  },
 }
 
 export default HomePage

@@ -6,26 +6,33 @@ import { useUserInfo } from '../hooks/useUserInfo'
 import { useAuth } from '../context/AuthContext'
 import { Navigate } from 'react-router-dom'
 import { updateUserInfo, uploadUserPhoto, API_BASE_URL } from '../api/index.api'
+import Sidebar from '../components/Sidebar'
 
 const ProfilePaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  margin: theme.spacing(2),
-  backgroundColor: '#F0F8FF',
-  borderRadius: '15px',
-  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+  padding: theme.spacing(6),
+  margin: theme.spacing(3),
+  backgroundColor: '#F8F9FA',
+  borderRadius: '20px',
+  // boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
 }))
 
 const InfoBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(2),
-  borderRadius: '10px',
-  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
-  marginBottom: theme.spacing(2),
+  padding: theme.spacing(3),
+  borderRadius: '15px',
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+  marginBottom: theme.spacing(3),
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.1)',
+  },
 }))
 
 const LabelTypography = styled(Typography)(({ theme }) => ({
-  fontWeight: 'bold',
+  fontWeight: 600,
   color: theme.palette.text.secondary,
+  marginBottom: theme.spacing(1),
 }))
 
 const AvatarWrapper = styled(Box)(({ theme }) => ({
@@ -42,9 +49,17 @@ const CameraIconButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.common.white,
   opacity: 0,
-  transition: 'opacity 0.3s',
+  transition: 'opacity 0.3s, background-color 0.3s',
   '&:hover': {
     backgroundColor: theme.palette.primary.dark,
+  },
+}))
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.primary.main,
+    },
   },
 }))
 
@@ -81,7 +96,7 @@ const Profile = () => {
   }
 
   if (isUserLoading || !userInfo)
-    return <CircularProgress sx={{ position: 'absolute', top: '20%', left: '25%', minWidth: '25%', minHeight: '20%' }} />
+    return <CircularProgress sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
   // @ts-ignore
   if (userError) return <Typography color="error">Error: {userError.message}</Typography>
 
@@ -104,6 +119,8 @@ const Profile = () => {
           plz: userInfo.address.plz,
           city: userInfo.address.city,
         },
+        firstName: userInfo?.personalInfo.name,
+        lastName: userInfo?.personalInfo.lastName,
       }
 
       const updatedUserInfo = await updateUserInfo(updatedFields)
@@ -179,115 +196,142 @@ const Profile = () => {
     const heightInMeters = height / 100
     return (weight / (heightInMeters * heightInMeters)).toFixed(1)
   }
+
   return (
-    <Box sx={{ maxWidth: 800, margin: '0 auto', p: 2, mt: '10vh' }}>
-      <ProfilePaper elevation={3}>
-        <Grid container spacing={3} alignItems="center" sx={{ mb: 4 }}>
-          <Grid item>
-            <AvatarWrapper>
-              <Avatar
-                sx={{ width: 100, height: 100, bgcolor: 'primary.main' }}
-                alt={userInfo.email}
-                src={photoUrl || ''}
-                onError={e => {
-                  console.error('Error loading image:', e)
-                  console.log('Attempted image URL:', photoUrl)
-                }}
-              />
-              <CameraIconButton onClick={triggerPhotoUpload} disabled={isUploadingPhoto}>
-                {isUploadingPhoto ? <CircularProgress size={24} /> : <CameraIcon />}
-              </CameraIconButton>
-              <input type="file" ref={fileInputRef} onChange={handlePhotoChange} style={{ display: 'none' }} accept="image/*" />
-            </AvatarWrapper>
-          </Grid>
-          <Grid item xs>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {userInfo.email}
-            </Typography>
-            {!isEditing && (
-              <Button startIcon={<EditIcon />} variant="contained" color="primary" onClick={handleEdit}>
-                Edit Profile
-              </Button>
-            )}
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <InfoBox>
-              <LabelTypography variant="subtitle2">Age</LabelTypography>
-              {isEditing ? (
-                <TextField fullWidth name="age" value={userInfo.personalInfo.age} onChange={handleChange} type="number" />
-              ) : (
-                <Typography variant="h6">{userInfo.personalInfo.age}</Typography>
-              )}
-            </InfoBox>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InfoBox>
-              <LabelTypography variant="subtitle2">Weight (kg)</LabelTypography>
-              {isEditing ? (
-                <TextField fullWidth name="weight" value={userInfo.personalInfo.weight} onChange={handleChange} type="number" />
-              ) : (
-                <Typography variant="h6">{userInfo.personalInfo.weight}</Typography>
-              )}
-            </InfoBox>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InfoBox>
-              <LabelTypography variant="subtitle2">Height (cm)</LabelTypography>
-              {isEditing ? (
-                <TextField fullWidth name="height" value={userInfo.personalInfo.height} onChange={handleChange} type="number" />
-              ) : (
-                <Typography variant="h6">{userInfo.personalInfo.height}</Typography>
-              )}
-            </InfoBox>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <InfoBox>
-              <LabelTypography variant="subtitle2">BMI</LabelTypography>
-              <Typography variant="h6">{userInfo.personalInfo.bmi}</Typography>
-            </InfoBox>
-          </Grid>
-        </Grid>
-
-        <InfoBox sx={{ mt: 2 }}>
-          <LabelTypography variant="subtitle2">Address</LabelTypography>
-          {isEditing ? (
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth name="street" label="Street" value={userInfo.address.street} onChange={handleChange} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth name="houseNumber" label="House Number" value={userInfo.address.houseNumber} onChange={handleChange} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth name="plz" label="PLZ" value={userInfo.address.plz} onChange={handleChange} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth name="city" label="City" value={userInfo.address.city} onChange={handleChange} />
-              </Grid>
+    <Box sx={{ display: 'flex', backgroundColor: '#d2cfc9', padding: 0, margin: 0 }}>
+      <Sidebar />
+      <Box sx={{ maxWidth: 800, marginLeft: '30%', p: 2, mt: '16px' }}>
+        <ProfilePaper elevation={3}>
+          <Grid container spacing={3} alignItems="center" sx={{ mb: 4 }}>
+            <Grid item>
+              <AvatarWrapper>
+                <Avatar
+                  sx={{ width: 120, height: 120, bgcolor: 'primary.main' }}
+                  alt={userInfo.email}
+                  src={photoUrl || ''}
+                  onError={e => {
+                    console.error('Error loading image:', e)
+                    console.log('Attempted image URL:', photoUrl)
+                  }}
+                />
+                <CameraIconButton onClick={triggerPhotoUpload} disabled={isUploadingPhoto}>
+                  {isUploadingPhoto ? <CircularProgress size={24} /> : <CameraIcon />}
+                </CameraIconButton>
+                <input type="file" ref={fileInputRef} onChange={handlePhotoChange} style={{ display: 'none' }} accept="image/*" />
+              </AvatarWrapper>
             </Grid>
-          ) : (
-            <Box>
-              <Typography variant="body1">{userInfo.address.street + ' ' + userInfo.address.houseNumber}</Typography>
-              <Typography variant="body1">{userInfo.address.plz + ' ' + userInfo.address.city}</Typography>
+            <Grid item xs>
+              <Typography variant="h4" sx={{ mb: 1, fontWeight: 600 }}>
+                {userInfo?.personalInfo.name} {userInfo?.personalInfo.lastName}
+              </Typography>
+              <Typography variant="subtitle1" sx={{ mb: 2, color: 'text.secondary' }}>
+                {userInfo.email}
+              </Typography>
+              {!isEditing && (
+                <Button startIcon={<EditIcon />} variant="contained" color="primary" onClick={handleEdit}>
+                  Edit Profile
+                </Button>
+              )}
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <InfoBox>
+                <LabelTypography variant="subtitle2">First Name</LabelTypography>
+                {isEditing ? (
+                  <StyledTextField fullWidth name="firstName" value={userInfo?.personalInfo.name} onChange={handleChange} />
+                ) : (
+                  <Typography variant="h6">{userInfo?.personalInfo.name}</Typography>
+                )}
+              </InfoBox>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InfoBox>
+                <LabelTypography variant="subtitle2">Last Name</LabelTypography>
+                {isEditing ? (
+                  <StyledTextField fullWidth name="lastName" value={userInfo?.personalInfo.lastName} onChange={handleChange} />
+                ) : (
+                  <Typography variant="h6">{userInfo?.personalInfo.lastName}</Typography>
+                )}
+              </InfoBox>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InfoBox>
+                <LabelTypography variant="subtitle2">Age</LabelTypography>
+                {isEditing ? (
+                  <StyledTextField fullWidth name="age" value={userInfo.personalInfo.age} onChange={handleChange} type="number" />
+                ) : (
+                  <Typography variant="h6">{userInfo.personalInfo.age}</Typography>
+                )}
+              </InfoBox>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InfoBox>
+                <LabelTypography variant="subtitle2">Weight (kg)</LabelTypography>
+                {isEditing ? (
+                  <StyledTextField fullWidth name="weight" value={userInfo.personalInfo.weight} onChange={handleChange} type="number" />
+                ) : (
+                  <Typography variant="h6">{userInfo.personalInfo.weight}</Typography>
+                )}
+              </InfoBox>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InfoBox>
+                <LabelTypography variant="subtitle2">Height (cm)</LabelTypography>
+                {isEditing ? (
+                  <StyledTextField fullWidth name="height" value={userInfo.personalInfo.height} onChange={handleChange} type="number" />
+                ) : (
+                  <Typography variant="h6">{userInfo.personalInfo.height}</Typography>
+                )}
+              </InfoBox>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InfoBox>
+                <LabelTypography variant="subtitle2">BMI</LabelTypography>
+                <Typography variant="h6">{userInfo.personalInfo.bmi}</Typography>
+              </InfoBox>
+            </Grid>
+          </Grid>
+
+          <InfoBox sx={{ mt: 2 }}>
+            <LabelTypography variant="subtitle2">Address</LabelTypography>
+            {isEditing ? (
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <StyledTextField fullWidth name="street" label="Street" value={userInfo.address.street} onChange={handleChange} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <StyledTextField fullWidth name="houseNumber" label="House Number" value={userInfo.address.houseNumber} onChange={handleChange} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <StyledTextField fullWidth name="plz" label="PLZ" value={userInfo.address.plz} onChange={handleChange} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <StyledTextField fullWidth name="city" label="City" value={userInfo.address.city} onChange={handleChange} />
+                </Grid>
+              </Grid>
+            ) : (
+              <Box>
+                <Typography variant="body1">{userInfo.address.street + ' ' + userInfo.address.houseNumber}</Typography>
+                <Typography variant="body1">{userInfo.address.plz + ' ' + userInfo.address.city}</Typography>
+              </Box>
+            )}
+          </InfoBox>
+
+          {isEditing && (
+            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button startIcon={<CancelIcon />} variant="outlined" color="warning" onClick={handleCancel} sx={{ mr: 2 }}>
+                Cancel
+              </Button>
+              <Button startIcon={<SaveIcon />} variant="contained" color="primary" onClick={handleSave} disabled={isUpdating}>
+                {isUpdating ? 'Saving...' : 'Save Changes'}
+              </Button>
             </Box>
           )}
-        </InfoBox>
-
-        {isEditing && (
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button startIcon={<CancelIcon />} variant="outlined" color="warning" onClick={handleCancel} sx={{ mr: 2 }}>
-              Cancel
-            </Button>
-            <Button startIcon={<SaveIcon />} variant="contained" color="primary" onClick={handleSave} disabled={isUpdating}>
-              {isUpdating ? 'Saving...' : 'Save Changes'}
-            </Button>
-          </Box>
-        )}
-      </ProfilePaper>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} message={snackbarMessage} />
+        </ProfilePaper>
+        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} message={snackbarMessage} />
+      </Box>
     </Box>
   )
 }

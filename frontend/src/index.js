@@ -9,11 +9,11 @@ import Signup from './Pages/Signup'
 import ForgotPassword from './components/ForgotPassword'
 import HomePage from './Pages/HomePage'
 import MyPlan from './Pages/MyPlan'
-import Profile from './Pages/Profile'
 import TrainingRecord from './Pages/TrainingRecord'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import Profile from './Pages/Profile'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const queryClient = new QueryClient()

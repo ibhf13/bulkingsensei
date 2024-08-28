@@ -9,6 +9,8 @@ const seedUsers = [
     email: "alkan@example.com",
     password: "password123",
     personalInfo: {
+      name: "Alkan",
+      lastName: "Aydin",
       age: 28,
       weight: 80,
       height: 180,
@@ -26,6 +28,8 @@ const seedUsers = [
     email: "wolfgang@example.com",
     password: "password456",
     personalInfo: {
+      name: "Wolfgang",
+      lastName: "Mehl",
       age: 32,
       weight: 65,
       height: 165,

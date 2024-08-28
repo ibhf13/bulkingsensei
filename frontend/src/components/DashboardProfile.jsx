@@ -41,7 +41,7 @@ const DashboardProfile = ({ user, goals, monthlyProgress }) => {
         <Avatar alt={user.name} src={user.avatar} sx={{ width: 80, height: 80 }} />
       </AvatarContainer>
       <Typography variant="h6" align="center">
-        {user.email}
+        {user.name}
       </Typography>
       <Typography variant="body2" align="center">
         {user.city}
