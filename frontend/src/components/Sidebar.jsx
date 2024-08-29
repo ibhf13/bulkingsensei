@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, List, ListItem, ListItemIcon, ListItemText, Typography, Divider, Button } from '@mui/material'
+import { Box, List, ListItem, ListItemIcon, ListItemText, Typography, Divider, Button, useTheme, useMediaQuery } from '@mui/material'
 import { styled } from '@mui/system'
 import theme from '../styles/theme'
 import HomeIcon from '@mui/icons-material/Home'
@@ -27,6 +27,7 @@ const SidebarContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('lg')]: {
     maxWidth: '20%',
     maxHight: '80%',
+    padding: theme.spacing(2),
   },
 }))
 
@@ -37,21 +38,33 @@ const StyledListItem = styled(ListItem)({
     backgroundColor: theme.palette.action.hover,
     cursor: 'pointer',
   },
+  [theme.breakpoints.down('lg')]: {
+    maxWidth: '20%',
+    maxHight: '80%',
+    padding: theme.spacing(1),
+  },
 })
 
 const StyledListItemText = styled(ListItemText)({
   '& .MuiListItemText-primary': {
     fontWeight: 'bold',
   },
+  [theme.breakpoints.down('lg')]: {
+    padding: theme.spacing(0),
+  },
 })
 
 const LogoutButton = styled(Button)({
   marginTop: 'auto',
   borderRadius: '8px',
+  minWidth: '10%',
+  maxWidth: '10%',
 })
 
 const Sidebar = () => {
   const navigate = useNavigate()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const handleNavigation = path => {
     navigate(path)
@@ -72,29 +85,29 @@ const Sidebar = () => {
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
-          <StyledListItemText primary="Home" />
+          {!isMobile && <StyledListItemText primary="Home" />}
         </StyledListItem>
         <StyledListItem onClick={() => handleNavigation('/profile')}>
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <StyledListItemText primary="Profile" />
+          {!isMobile && <StyledListItemText primary="Profile" />}
         </StyledListItem>
         <StyledListItem onClick={() => handleNavigation('/myplan')}>
           <ListItemIcon>
             <FitnessCenterIcon />
           </ListItemIcon>
-          <StyledListItemText primary="My Plan" />
+          {!isMobile && <StyledListItemText primary="My Plan" />}
         </StyledListItem>
         <StyledListItem onClick={() => handleNavigation('/trainingrecord')}>
           <ListItemIcon>
             <HistoryIcon />
           </ListItemIcon>
-          <StyledListItemText primary="Training Record" />
+          {!isMobile && <StyledListItemText primary="Training Record" />}
         </StyledListItem>
       </List>
-      <LogoutButton variant="outlined" startIcon={<LogoutIcon />} onClick={handleLogout} fullWidth>
-        Logout
+      <LogoutButton variant="contained" startIcon={<LogoutIcon sx={{ ml: 2 }} />} onClick={handleLogout} fullWidth>
+        {!isMobile && 'Logout'}
       </LogoutButton>
     </SidebarContainer>
   )

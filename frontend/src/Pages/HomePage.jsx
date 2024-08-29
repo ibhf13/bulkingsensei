@@ -23,7 +23,9 @@ const MainContent = styled(Box)(({ theme }) => ({
   backgroundColor: '#d2cfc9',
   minHeight: '100vh',
   [theme.breakpoints.down('lg')]: {
-    maxWidth: 'calc(100% - 300px)',
+    maxWidth: '50%',
+    marginLeft: '25%',
+    paddingRight: '10%',
   },
 }))
 
