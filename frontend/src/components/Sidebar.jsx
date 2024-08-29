@@ -57,8 +57,10 @@ const StyledListItemText = styled(ListItemText)({
 const LogoutButton = styled(Button)({
   marginTop: 'auto',
   borderRadius: '8px',
-  minWidth: '10%',
-  maxWidth: '10%',
+  [theme.breakpoints.down('md')]: {
+    minWidth: '10%',
+    maxWidth: '10%',
+  },
 })
 
 const Sidebar = () => {
