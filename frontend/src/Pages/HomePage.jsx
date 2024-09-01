@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Grid, Paper, Typography, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, LinearProgress } from '@mui/material'
 import { styled } from '@mui/system'
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
@@ -14,6 +13,7 @@ import { useUserInfo } from '../hooks/useUserInfo'
 import DashboardProfile from '../components/DashboardProfile'
 import { useTrainingHistory } from '../hooks/useTrainingHistory'
 import StatisticsPreview from '../components/StatisticsPreview '
+import StepCounter from '../components/StepCounter'
 
 const MainContent = styled(Box)(({ theme }) => ({
   flexGrow: 1,
@@ -50,16 +50,16 @@ const StyledIcon = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.main,
 }))
 
-const HomePage = ({ user }) => {
+const HomePage = () => {
   const navigate = useNavigate()
   const monthlyProgress = 80
-  const stepsProgress = 50
   const { data: fetchedUserInfo } = useUserInfo()
   const [userInfo, setUserInfo] = useState(null)
 
   const [goals, setGoals] = useState([])
   const [goalDialogOpen, setGoalDialogOpen] = useState(false)
   const [newGoal, setNewGoal] = useState('')
+
   const { data: trainingHistory, isLoading: isTrainingHistoryLoading } = useTrainingHistory()
 
   useEffect(() => {
@@ -91,21 +91,7 @@ const HomePage = ({ user }) => {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
-            <DashboardCard>
-              <IconWrapper>
-                <StyledIcon>
-                  <DirectionsRunIcon />
-                </StyledIcon>
-                <Typography variant="subtitle1">Steps</Typography>
-              </IconWrapper>
-              <Typography variant="h4" sx={{ mb: 1 }}>
-                2,500
-              </Typography>
-              <LinearProgress variant="determinate" value={stepsProgress} sx={{ height: 8, borderRadius: 4 }} />
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {stepsProgress}% of daily goal
-              </Typography>
-            </DashboardCard>
+            <StepCounter initialSteps={0} initialGoal={10000} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <DashboardCard>
