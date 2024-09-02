@@ -31,15 +31,14 @@ const WaterIntake = () => {
 
   useEffect(() => {
     const now = new Date()
-
-    const millisUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0).getTime()
+    const millisUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0).getTime() - now.getTime()
 
     const timeout = setTimeout(() => {
       setIntake(0)
     }, millisUntilMidnight)
 
     return () => clearTimeout(timeout)
-  }, [intake])
+  }, [])
 
   const handleGoalDialogOpen = e => {
     e.stopPropagation()
