@@ -86,7 +86,7 @@ const HomePage = () => {
     <Box sx={{ display: 'flex', backgroundColor: '#d2cfc9', minHeight: '100vh' }}>
       <Sidebar />
       <MainContent>
-        <Typography variant="h4" sx={{ mb: 3, color: '#3fa2ad', fontWeight: 'bold' }}>
+        <Typography variant="h4" sx={{ mb: 3, color: 'black', fontWeight: 'bold' }}>
           Welcome Back, {userInfo?.personalInfo.name}!
         </Typography>
         <Grid container spacing={2}>
@@ -99,13 +99,26 @@ const HomePage = () => {
             </DashboardCard>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <DashboardCard onClick={() => navigate('/myplan')} sx={{ cursor: 'pointer' }}>
+            <DashboardCard variant="elevated" onClick={() => navigate('/myplan')} sx={{ cursor: 'pointer' }}>
               <IconWrapper>
                 <StyledIcon>
                   <AssignmentIcon />
                 </StyledIcon>
-                <Typography variant="subtitle1">My Plan</Typography>
+                <Typography variant="h6">My Plan</Typography>
               </IconWrapper>
+              <Typography
+                variant="h7"
+                sx={{
+                  color: '#808080',
+                  display: 'flex',
+                  flexGrow: 2,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                }}
+              >
+                Click here to log an exercise
+              </Typography>
             </DashboardCard>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
@@ -138,7 +151,7 @@ const HomePage = () => {
                 <Typography variant="h6">Progress</Typography>
               </IconWrapper>
               <LinearProgress variant="determinate" value={monthlyProgress} sx={{ height: 8, borderRadius: 4, mb: 1 }} />
-              <Typography variant="body2">{monthlyProgress}% of monthly goal achieved</Typography>
+              <Typography variant="body1">{monthlyProgress}% of monthly goal achieved</Typography>
             </DashboardCard>
           </Grid>
           <Grid item xs={12}>

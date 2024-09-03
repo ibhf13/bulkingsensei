@@ -16,6 +16,7 @@ import {
   Alert,
 } from '@mui/material'
 import { useRecordTrainingSession } from '../hooks/useTrainingHistory'
+import { useExercisesImages } from '../hooks/useExercisesImages'
 
 const EditTrainingPopup = ({ open, onClose, exercise, onSave }) => {
   const [sets, setSets] = useState(exercise.defaultSets || 1)
@@ -26,6 +27,7 @@ const EditTrainingPopup = ({ open, onClose, exercise, onSave }) => {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' })
 
   const recordTrainingMutation = useRecordTrainingSession()
+  const { getExerciseImage } = useExercisesImages()
 
   const handleSave = async () => {
     const trainingData = {
@@ -70,7 +72,11 @@ const EditTrainingPopup = ({ open, onClose, exercise, onSave }) => {
         <DialogContent>
           <Box display="flex" mb={2}>
             <Box mr={2}>
-              <img src={exercise.gifUrl} alt={exercise.name} style={{ width: 100, height: 100, objectFit: 'cover' }} />
+              <img
+                src={getExerciseImage(exercise.name)}
+                alt={exercise.name}
+                style={{ width: 100, height: 100, borderRadius: '12px', objectFit: 'cover' }}
+              />
             </Box>
             <Box>
               <Typography variant="body1">{exercise.description}</Typography>

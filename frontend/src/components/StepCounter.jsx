@@ -68,7 +68,7 @@ const StepCounter = ({ initialSteps = 0, initialGoal = 10000 }) => {
           <StyledIcon>
             <DirectionsRunIcon />
           </StyledIcon>
-          <Typography variant="subtitle1">Steps</Typography>
+          <Typography variant="h6">Steps</Typography>
         </IconWrapper>
         <Typography variant="h4" sx={{ mb: 1 }}>
           {steps.toLocaleString()}

@@ -85,7 +85,7 @@ const MyPlan = () => {
             }}
           >
             <ButtonBox onClick={() => handleMuscleTypeClick(muscleType._id, muscleType.name)}>
-              <Typography variant="h5" sx={{ fontFamily: 'Nanum Gothic, sans-serif' }}>
+              <Typography variant="h6" sx={{ fontFamily: 'Nanum Gothic, sans-serif' }}>
                 {muscleType.name}
               </Typography>
             </ButtonBox>

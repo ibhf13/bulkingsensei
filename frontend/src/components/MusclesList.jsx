@@ -27,7 +27,7 @@ const MusclesList = ({ isOpen, onClose, exercises, muscleType, isLoading }) => {
         right: 0,
         top: 0,
         bottom: 0,
-        width: 300,
+        width: 350,
         backgroundColor: 'background.paper',
         boxShadow: 3,
         transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
@@ -50,7 +50,7 @@ const MusclesList = ({ isOpen, onClose, exercises, muscleType, isLoading }) => {
         ) : exercises.length > 0 ? (
           exercises.map(exercise => (
             <Card key={exercise._id} sx={{ mb: 2, cursor: 'pointer' }} onClick={() => handleExerciseClick(exercise)}>
-              <CardMedia component="img" height="140" image={getExerciseImage(exercise.name)} alt={exercise.name} />
+              <CardMedia component="img" height="auto" image={getExerciseImage(exercise.name)} alt={exercise.name} />
               <CardContent>
                 <Typography variant="h6">{exercise.name}</Typography>
               </CardContent>
