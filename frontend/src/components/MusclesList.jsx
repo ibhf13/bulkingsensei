@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { Box, Typography, IconButton, Card, CardContent, CardMedia, CircularProgress } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import ExerciseEditDialog from './EditTrainingPopup'
+import { useExercisesImages, ExerciseType } from '../hooks/useExercisesImages'
 
 const MusclesList = ({ isOpen, onClose, exercises, muscleType, isLoading }) => {
   const [selectedExercise, setSelectedExercise] = useState(null)
+  const { getExerciseImage } = useExercisesImages()
 
   const handleExerciseClick = exercise => {
     setSelectedExercise(exercise)
@@ -15,9 +17,7 @@ const MusclesList = ({ isOpen, onClose, exercises, muscleType, isLoading }) => {
   }
 
   const handleSaveTraining = trainingData => {
-    // TODO: Implement saving to user's training history
     console.log('Saving training data:', trainingData)
-    // You'll need to implement the API call to save this data
   }
 
   return (
@@ -50,7 +50,7 @@ const MusclesList = ({ isOpen, onClose, exercises, muscleType, isLoading }) => {
         ) : exercises.length > 0 ? (
           exercises.map(exercise => (
             <Card key={exercise._id} sx={{ mb: 2, cursor: 'pointer' }} onClick={() => handleExerciseClick(exercise)}>
-              <CardMedia component="img" height="140" image={exercise.gifUrl} alt={exercise.name} />
+              <CardMedia component="img" height="140" image={getExerciseImage(exercise.name)} alt={exercise.name} />
               <CardContent>
                 <Typography variant="h6">{exercise.name}</Typography>
               </CardContent>
