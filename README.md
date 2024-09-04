@@ -1,70 +1,218 @@
-# Getting Started with Create React App
+# Bulking Sensei
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Architecture](#architecture)
+4. [Technologies Used](#technologies-used)
+5. [Getting Started](#getting-started)
+6. [Frontend](#frontend)
+7. [Backend](#backend)
+8. [API Endpoints](#api-endpoints)
+9. [Database Models](#database-models)
+10. [Authentication](#authentication)
+11. [Deployment](#deployment)
+12. [Contributing](#contributing)
 
-In the project directory, you can run:
+## Introduction
 
-### `npm start`
+Bulking Sensei is a comprehensive fitness tracking application designed to help users monitor their fitness progress, create workout routines, and log their training sessions. The application consists of a React-based frontend and a Node.js backend with MongoDB as the database.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Visit the live application: [https://bulkingsensei.vercel.app/](https://bulkingsensei.vercel.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+-   User authentication (register, login, forgot password)
+-   User profile management with photo upload
+-   Exercise library with categorization by muscle groups
+-   Custom workout routine creation
+-   Training session logging and history tracking
+-   Water intake monitoring
+-   Dashboard with recent training statistics
+-   Responsive design for various devices
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Architecture
 
-### `npm run build`
+The application follows a client-server architecture:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   React-based single-page application (SPA)
+-   Component-based structure with custom hooks for logic separation
+-   State management using React Query and React Context
+-   Routing with React Router, including protected routes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend
 
-### `npm run eject`
+-   Node.js with Express.js framework
+-   MVC (Model-View-Controller) architecture
+-   RESTful API design
+-   MongoDB database with Mongoose ODM
+-   JWT-based authentication
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Technologies Used
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+-   React 18
+-   React Router 6
+-   React Query
+-   Material-UI (MUI)
+-   Axios
+-   PropTypes
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Backend
 
-## Learn More
+-   Node.js
+-   Express.js
+-   MongoDB with Mongoose
+-   JSON Web Tokens (JWT)
+-   bcrypt
+-   Joi (for validation)
+-   Multer (for file uploads)
+-   Winston (for logging)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Getting Started
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clone the repository
+2. Set up the backend:
+    ```
+    cd backend
+    npm install
+    ```
+3. Set up the frontend:
+    ```
+    cd frontend
+    npm install
+    ```
+4. Configure environment variables (see Backend section for details)
+5. Start the backend server:
+    ```
+    npm run dev
+    ```
+6. Start the frontend development server:
+    ```
+    npm start
+    ```
 
-### Code Splitting
+## Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Project Structure
 
-### Analyzing the Bundle Size
+```
+src/
+├── api/
+├── components/
+├── context/
+├── hooks/
+├── pages/
+├── styles/
+└── index.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Key Components
 
-### Making a Progressive Web App
+-   Dashboard with water intake tracker and training statistics
+-   Workout plan management interface
+-   Exercise library browser
+-   Training record logging and viewing
+-   User profile management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Backend
 
-### Advanced Configuration
+### Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+backend/
+├── api/
+├── controllers/
+├── models/
+├── middleware/
+├── config/
+├── services/
+├── utils/
+└── server.js
+```
 
-### Deployment
+### Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Required environment variables:
 
-### `npm run build` fails to minify
+-   `MONGO_URI`: MongoDB connection string
+-   `JWT_SECRET`: Secret key for JWT
+-   `PORT`: Server port number (default: 5000)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Data Seeding
+
+Seed scripts are provided for populating the database with initial data:
+
+-   `seedExercises.js`: Populates exercises and muscle types
+-   `seedTrainingHistory.js`: Adds sample training history data
+-   `seedUser.js`: Creates sample user accounts
+
+## API Endpoints
+
+### Users
+
+-   POST `/api/users/register`: Register a new user
+-   POST `/api/users/login`: Login user
+-   GET `/api/users/info`: Get user info (protected)
+-   PUT `/api/users/update`: Update user info (protected)
+-   POST `/api/users/upload-photo`: Upload user photo (protected)
+-   GET `/api/users/photo`: Get user photo (protected)
+
+### Exercises
+
+-   GET `/api/exercises`: Get all exercises
+-   GET `/api/exercises/:id`: Get exercise by ID
+-   GET `/api/exercises/muscle-types`: Get all muscle types
+-   GET `/api/exercises/muscle-type/:muscleTypeId`: Get exercises by muscle type
+
+### Routines
+
+-   POST `/api/routines`: Create a new routine (protected)
+-   GET `/api/routines`: Get all routines for a user (protected)
+-   PUT `/api/routines/:id`: Update a routine (protected)
+-   DELETE `/api/routines/:id`: Delete a routine (protected)
+
+### Training History
+
+-   POST `/api/history`: Record a training session (protected)
+-   GET `/api/history`: Get all training sessions for a user (protected)
+-   GET `/api/history/:id`: Get a specific training session (protected)
+
+## Database Models
+
+-   **User**: Stores user information including email, password (hashed), personal info, address, and photo URL.
+-   **Exercise**: Represents individual exercises with details like name, description, GIF URL, default sets and reps, and associated muscle type.
+-   **MuscleType**: Categorizes exercises by muscle groups.
+-   **Routine**: Represents user-created workout routines, including a list of exercises with custom sets and reps.
+-   **TrainingHistory**: Records completed workout sessions, including date and exercises performed.
+
+## Authentication
+
+The application uses JSON Web Tokens (JWT) for secure user authentication. Protected routes require a valid JWT to be included in the request header. Passwords are hashed using bcrypt before storage.
+
+## Deployment
+
+The application is deployed on Vercel:
+
+-   Frontend: Deployed as a static site
+-   Backend: Utilizes Vercel's serverless functions
+-   Database: MongoDB Atlas cloud database
+-   File Storage: Vercel Blob for user photo uploads
+
+## Contributing
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes and commit them: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Submit a pull request
+
+Please ensure your code adheres to the existing style conventions and passes all tests before submitting a pull request.
+
+---
+
+Bulking Sensei provides a comprehensive solution for fitness enthusiasts to track their progress, manage workouts, and stay motivated. With its user-friendly interface and robust backend, it offers a seamless experience for users to achieve their fitness goals.

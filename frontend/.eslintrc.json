@@ -1,0 +1,8 @@
+{
+  "extends": ["react-app", "eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "react/prop-types": "off",
+    "no-unused-vars": "warn"
+  }
+}
